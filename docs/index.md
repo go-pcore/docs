@@ -10,12 +10,15 @@ assignability, inference and rich-data serialization. Type names and semantics
 track Puppet's `Puppet::Pops::Types`, so it is a drop-in for Puppet type
 expressions. The module path is `github.com/go-pcore/pcore`.
 
-!!! success "Status: v0.1 complete"
-    Type model, round-trippable parser, value model, and `IsInstance` /
-    `IsAssignable` / `Infer` / `Generalize` / `CommonType` / `ToData` /
-    `FromData` — at **100% coverage**, `gofmt` + `go vet` clean, CI green across
+!!! success "Status: v0.2 — full Pcore type calculus"
+    The complete Puppet `Puppet::Pops::Types` set is implemented: type model,
+    round-trippable parser, value model, and `IsInstance` / `IsAssignable` /
+    `Infer` / `Generalize` / `CommonType` / `ToData` / `FromData`, plus
+    **recursive type aliases** and **`TypeSet`** via a `Loader` type environment,
+    `Timestamp` / `Timespan` ranges, `SemVer` / `SemVerRange`, `Init`, `Object`,
+    `RichData`, `Runtime`, `URI`, `Iterable` / `Iterator`, `Error` and
+    `Callable` — at **100% coverage**, `gofmt` + `go vet` clean, CI green across
     the six 64-bit Go targets (amd64, arm64, riscv64, loong64, ppc64le, s390x).
-    Type **aliases** and **`TypeSet`** are staged for v0.2.
 
 ## Install
 

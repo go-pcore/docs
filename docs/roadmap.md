@@ -11,12 +11,18 @@
 - 100% coverage, `gofmt` + `go vet` clean, CI green on amd64, arm64, riscv64,
   loong64, ppc64le and s390x.
 
-## v0.2 — planned
+## v0.2 — done
 
-- **Type aliases** — named, referenceable type definitions.
-- **`TypeSet`** — grouped type definitions with a namespace.
+- **Type aliases** — named, referenceable type definitions, including forward
+  and recursive references, via a `Loader` type environment.
+- **`TypeSet`** — grouped, namespaced type definitions with references.
 - `Timestamp` / `Timespan` **range parameters** (`Timestamp[from, to]`).
-- Pcore-exact `Timespan` textual form.
+- `SemVer` / `SemVerRange`, `Init`, `Object`, `RichData`, `Runtime`, `URI`,
+  `Iterable` / `Iterator`, `Error` and `Callable`.
+
+## Later
+
+- Pcore-exact `Timespan` textual form (`D-HH:MM:SS.fff`).
 - Tighter `CommonType` for strings (length-range merging).
 
 ## Consumers
