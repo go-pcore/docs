@@ -50,17 +50,47 @@ wrapped in `Optional[…]` **or** its value type accepts `Undef`.
 | `Regexp[/re/]` | a regexp value (or, unparameterized, any regexp) |
 | `Type[T]` | a type value assignable to `T` |
 | `Sensitive[T]` | a value of `T` wrapped so it is redacted |
+| `Init[T, args…]` | a value that constructs a `T` (optionally with extra arg types) |
+| `Iterable[T]` | an iterable producing `T` |
+| `Iterator[T]` | an iterator producing `T` |
+| `Callable[params…, block]` | a callable with the given parameter (and block) types |
 
 ## Rich data
 
 | Type | Meaning |
 |------|---------|
-| `Timestamp` | an instant in time |
-| `Timespan` | a duration |
+| `Timestamp[from, to]` | an instant in time, optionally range-bounded |
+| `Timespan[from, to]` | a duration, optionally range-bounded |
 | `Binary` | a byte string |
+| `SemVer[ranges…]` | a semantic version within any of the ranges |
+| `SemVerRange` | a semantic-version range value |
+| `Runtime['go', name]` | a runtime (foreign) object, e.g. a Go value |
+| `URI[scheme]` | a URI, optionally constrained by scheme |
+| `Error[kind, issue_code]` | an error value with a kind and issue code |
 
-!!! note "Staged for v0.2"
-    Named **type aliases** and **`TypeSet`** are not yet parsed. `Timestamp` /
-    `Timespan` range parameters and the Pcore-exact `Timespan` string form are
-    also staged; the value model and serialization round-trip within this library
-    today.
+## Nominal / named
+
+| Type | Meaning |
+|------|---------|
+| `Object[{ name => …, parent => …, attributes => {…} }]` | a nominal object type with typed attributes |
+| `type X = <expr>` | a named **type alias** (forward and recursive references allowed) |
+| `TypeSet[{ name => …, version => …, types => {…}, references => {…} }]` | a namespaced set of grouped type definitions |
+
+Aliases and `TypeSet` members live in a `Loader` type environment
+(`pcore.NewLoader()`) that resolves forward and recursive references
+transparently through `Parse` / `IsInstance` / `IsAssignable` / `Infer`:
+
+```go
+l := pcore.NewLoader()
+l.Declare("type Tree = Hash[String, Variant[Tree, Integer]]")
+tree, _ := l.Parse("Tree")
+pcore.IsInstance(tree, map[string]pcore.Value{
+	"a": int64(1),
+	"b": map[string]pcore.Value{"c": int64(2)},
+}) // true
+```
+
+!!! note "Timespan textual form"
+    `Timespan` bounds are expressed with Go's duration syntax (for example
+    `Timespan['1s', '1m0s']`) and round-trip within this library; the
+    Pcore-exact `Timespan` string form (`D-HH:MM:SS.fff`) is not yet accepted.

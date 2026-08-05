@@ -35,6 +35,7 @@ with no payload and reconstructs wrapping `Undef`.
 A plain hash that happens to contain a `__ptype` / `__pvalue` key is encoded via
 the tagged `Hash` array form so it survives the round-trip unambiguously.
 
-!!! note "Staged for v0.2"
+!!! note "Timespan textual form"
     The `Timespan` string form uses Go's duration syntax and round-trips within
-    this library; the Pcore-exact `Timespan` textual form is staged.
+    this library; the Pcore-exact `Timespan` textual form (`D-HH:MM:SS.fff`) is
+    not yet emitted.
