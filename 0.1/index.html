@@ -545,12 +545,15 @@ assignability, inference and rich-data serialization. Type names and semantics
 track Puppet's <code>Puppet::Pops::Types</code>, so it is a drop-in for Puppet type
 expressions. The module path is <code>github.com/go-pcore/pcore</code>.</p>
 <div class="admonition success">
-<p class="admonition-title">Status: v0.1 complete</p>
-<p>Type model, round-trippable parser, value model, and <code>IsInstance</code> /
-<code>IsAssignable</code> / <code>Infer</code> / <code>Generalize</code> / <code>CommonType</code> / <code>ToData</code> /
-<code>FromData</code> — at <strong>100% coverage</strong>, <code>gofmt</code> + <code>go vet</code> clean, CI green across
-the six 64-bit Go targets (amd64, arm64, riscv64, loong64, ppc64le, s390x).
-Type <strong>aliases</strong> and <strong><code>TypeSet</code></strong> are staged for v0.2.</p>
+<p class="admonition-title">Status: v0.2 — full Pcore type calculus</p>
+<p>The complete Puppet <code>Puppet::Pops::Types</code> set is implemented: type model,
+round-trippable parser, value model, and <code>IsInstance</code> / <code>IsAssignable</code> /
+<code>Infer</code> / <code>Generalize</code> / <code>CommonType</code> / <code>ToData</code> / <code>FromData</code>, plus
+<strong>recursive type aliases</strong> and <strong><code>TypeSet</code></strong> via a <code>Loader</code> type environment,
+<code>Timestamp</code> / <code>Timespan</code> ranges, <code>SemVer</code> / <code>SemVerRange</code>, <code>Init</code>, <code>Object</code>,
+<code>RichData</code>, <code>Runtime</code>, <code>URI</code>, <code>Iterable</code> / <code>Iterator</code>, <code>Error</code> and
+<code>Callable</code> — at <strong>100% coverage</strong>, <code>gofmt</code> + <code>go vet</code> clean, CI green across
+the six 64-bit Go targets (amd64, arm64, riscv64, loong64, ppc64le, s390x).</p>
 </div>
 <h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/go-pcore/pcore

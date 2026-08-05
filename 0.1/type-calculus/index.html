@@ -370,6 +370,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#nominal-named" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nominal / named
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -540,6 +549,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#nominal-named" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nominal / named
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -692,6 +710,22 @@ wrapped in <code>Optional[…]</code> <strong>or</strong> its value type accepts
 <td><code>Sensitive[T]</code></td>
 <td>a value of <code>T</code> wrapped so it is redacted</td>
 </tr>
+<tr>
+<td><code>Init[T, args…]</code></td>
+<td>a value that constructs a <code>T</code> (optionally with extra arg types)</td>
+</tr>
+<tr>
+<td><code>Iterable[T]</code></td>
+<td>an iterable producing <code>T</code></td>
+</tr>
+<tr>
+<td><code>Iterator[T]</code></td>
+<td>an iterator producing <code>T</code></td>
+</tr>
+<tr>
+<td><code>Callable[params…, block]</code></td>
+<td>a callable with the given parameter (and block) types</td>
+</tr>
 </tbody>
 </table>
 <h2 id="rich-data">Rich data<a class="headerlink" href="#rich-data" title="Permanent link">&para;</a></h2>
@@ -704,25 +738,78 @@ wrapped in <code>Optional[…]</code> <strong>or</strong> its value type accepts
 </thead>
 <tbody>
 <tr>
-<td><code>Timestamp</code></td>
-<td>an instant in time</td>
+<td><code>Timestamp[from, to]</code></td>
+<td>an instant in time, optionally range-bounded</td>
 </tr>
 <tr>
-<td><code>Timespan</code></td>
-<td>a duration</td>
+<td><code>Timespan[from, to]</code></td>
+<td>a duration, optionally range-bounded</td>
 </tr>
 <tr>
 <td><code>Binary</code></td>
 <td>a byte string</td>
 </tr>
+<tr>
+<td><code>SemVer[ranges…]</code></td>
+<td>a semantic version within any of the ranges</td>
+</tr>
+<tr>
+<td><code>SemVerRange</code></td>
+<td>a semantic-version range value</td>
+</tr>
+<tr>
+<td><code>Runtime['go', name]</code></td>
+<td>a runtime (foreign) object, e.g. a Go value</td>
+</tr>
+<tr>
+<td><code>URI[scheme]</code></td>
+<td>a URI, optionally constrained by scheme</td>
+</tr>
+<tr>
+<td><code>Error[kind, issue_code]</code></td>
+<td>an error value with a kind and issue code</td>
+</tr>
 </tbody>
 </table>
+<h2 id="nominal-named">Nominal / named<a class="headerlink" href="#nominal-named" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Object[{ name =&gt; …, parent =&gt; …, attributes =&gt; {…} }]</code></td>
+<td>a nominal object type with typed attributes</td>
+</tr>
+<tr>
+<td><code>type X = &lt;expr&gt;</code></td>
+<td>a named <strong>type alias</strong> (forward and recursive references allowed)</td>
+</tr>
+<tr>
+<td><code>TypeSet[{ name =&gt; …, version =&gt; …, types =&gt; {…}, references =&gt; {…} }]</code></td>
+<td>a namespaced set of grouped type definitions</td>
+</tr>
+</tbody>
+</table>
+<p>Aliases and <code>TypeSet</code> members live in a <code>Loader</code> type environment
+(<code>pcore.NewLoader()</code>) that resolves forward and recursive references
+transparently through <code>Parse</code> / <code>IsInstance</code> / <code>IsAssignable</code> / <code>Infer</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nx">l</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">pcore</span><span class="p">.</span><span class="nx">NewLoader</span><span class="p">()</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nx">l</span><span class="p">.</span><span class="nx">Declare</span><span class="p">(</span><span class="s">&quot;type Tree = Hash[String, Variant[Tree, Integer]]&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nx">tree</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">l</span><span class="p">.</span><span class="nx">Parse</span><span class="p">(</span><span class="s">&quot;Tree&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nx">pcore</span><span class="p">.</span><span class="nx">IsInstance</span><span class="p">(</span><span class="nx">tree</span><span class="p">,</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">pcore</span><span class="p">.</span><span class="nx">Value</span><span class="p">{</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="s">&quot;a&quot;</span><span class="p">:</span><span class="w"> </span><span class="nb">int64</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="s">&quot;b&quot;</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">pcore</span><span class="p">.</span><span class="nx">Value</span><span class="p">{</span><span class="s">&quot;c&quot;</span><span class="p">:</span><span class="w"> </span><span class="nb">int64</span><span class="p">(</span><span class="mi">2</span><span class="p">)},</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">})</span><span class="w"> </span><span class="c1">// true</span>
+</code></pre></div>
 <div class="admonition note">
-<p class="admonition-title">Staged for v0.2</p>
-<p>Named <strong>type aliases</strong> and <strong><code>TypeSet</code></strong> are not yet parsed. <code>Timestamp</code> /
-<code>Timespan</code> range parameters and the Pcore-exact <code>Timespan</code> string form are
-also staged; the value model and serialization round-trip within this library
-today.</p>
+<p class="admonition-title">Timespan textual form</p>
+<p><code>Timespan</code> bounds are expressed with Go's duration syntax (for example
+<code>Timespan['1s', '1m0s']</code>) and round-trip within this library; the
+Pcore-exact <code>Timespan</code> string form (<code>D-HH:MM:SS.fff</code>) is not yet accepted.</p>
 </div>
 
 

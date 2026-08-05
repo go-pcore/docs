@@ -424,9 +424,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#v02-planned" class="md-nav__link">
+  <a href="#v02-done" class="md-nav__link">
     <span class="md-ellipsis">
-      v0.2 — planned
+      v0.2 — done
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#later" class="md-nav__link">
+    <span class="md-ellipsis">
+      Later
     </span>
   </a>
   
@@ -505,9 +514,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#v02-planned" class="md-nav__link">
+  <a href="#v02-done" class="md-nav__link">
     <span class="md-ellipsis">
-      v0.2 — planned
+      v0.2 — done
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#later" class="md-nav__link">
+    <span class="md-ellipsis">
+      Later
     </span>
   </a>
   
@@ -549,12 +567,18 @@
 <li>100% coverage, <code>gofmt</code> + <code>go vet</code> clean, CI green on amd64, arm64, riscv64,
   loong64, ppc64le and s390x.</li>
 </ul>
-<h2 id="v02-planned">v0.2 — planned<a class="headerlink" href="#v02-planned" title="Permanent link">&para;</a></h2>
+<h2 id="v02-done">v0.2 — done<a class="headerlink" href="#v02-done" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Type aliases</strong> — named, referenceable type definitions.</li>
-<li><strong><code>TypeSet</code></strong> — grouped type definitions with a namespace.</li>
+<li><strong>Type aliases</strong> — named, referenceable type definitions, including forward
+  and recursive references, via a <code>Loader</code> type environment.</li>
+<li><strong><code>TypeSet</code></strong> — grouped, namespaced type definitions with references.</li>
 <li><code>Timestamp</code> / <code>Timespan</code> <strong>range parameters</strong> (<code>Timestamp[from, to]</code>).</li>
-<li>Pcore-exact <code>Timespan</code> textual form.</li>
+<li><code>SemVer</code> / <code>SemVerRange</code>, <code>Init</code>, <code>Object</code>, <code>RichData</code>, <code>Runtime</code>, <code>URI</code>,
+  <code>Iterable</code> / <code>Iterator</code>, <code>Error</code> and <code>Callable</code>.</li>
+</ul>
+<h2 id="later">Later<a class="headerlink" href="#later" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Pcore-exact <code>Timespan</code> textual form (<code>D-HH:MM:SS.fff</code>).</li>
 <li>Tighter <code>CommonType</code> for strings (length-range merging).</li>
 </ul>
 <h2 id="consumers">Consumers<a class="headerlink" href="#consumers" title="Permanent link">&para;</a></h2>

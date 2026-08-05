@@ -575,9 +575,10 @@ with no payload and reconstructs wrapping <code>Undef</code>.</p>
 <p>A plain hash that happens to contain a <code>__ptype</code> / <code>__pvalue</code> key is encoded via
 the tagged <code>Hash</code> array form so it survives the round-trip unambiguously.</p>
 <div class="admonition note">
-<p class="admonition-title">Staged for v0.2</p>
+<p class="admonition-title">Timespan textual form</p>
 <p>The <code>Timespan</code> string form uses Go's duration syntax and round-trips within
-this library; the Pcore-exact <code>Timespan</code> textual form is staged.</p>
+this library; the Pcore-exact <code>Timespan</code> textual form (<code>D-HH:MM:SS.fff</code>) is
+not yet emitted.</p>
 </div>
 
 
